@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Camden Nights — Oriole Park Fan Desk</title>
+<meta name="theme-color" content="#DF4601">
+<meta name="description" content="Offline Camden Yards night-game park map & fan desk for Boyd — EXAMPLE data clearly labeled.">
+<style>/*__CSS__*/</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="stadium-glow" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="brand">
+    <span class="crest" aria-hidden="true">
+      <svg viewBox="0 0 64 64" width="52" height="52">
+        <defs>
+          <linearGradient id="orG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#FF6A1A"/><stop offset="1" stop-color="#DF4601"/>
+          </linearGradient>
+          <radialGradient id="orGlow" cx="50%" cy="40%" r="55%">
+            <stop offset="0" stop-color="#FF8A3D"/><stop offset="1" stop-color="#DF4601"/>
+          </radialGradient>
+        </defs>
+        <circle cx="32" cy="32" r="30" fill="#0a0a0a" stroke="url(#orG)" stroke-width="3"/>
+        <circle cx="32" cy="32" r="22" fill="url(#orGlow)" opacity=".92"/>
+        <path d="M20 38c4-14 10-22 12-24 2 2 8 10 12 24-4-3-8-4-12-4s-8 1-12 4z" fill="#0a0a0a" opacity=".85"/>
+        <circle cx="28" cy="28" r="2.2" fill="#fff"/><circle cx="36" cy="28" r="2.2" fill="#fff"/>
+        <path d="M26 34c2 2.5 4 3 6 3s4-.5 6-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div>
+      <h1>Camden Nights</h1>
+      <p class="sub">Oriole Park at Camden Yards · Night-game desk · Millersville, MD</p>
+    </div>
+  </div>
+  <div class="topmeta">
+    <span class="pill orange">AL East</span>
+    <span class="pill soft" id="demoPill">DEMO / EXAMPLE DATA</span>
+    <button type="button" id="btnWall" class="ghost" title="Wall display mode">Wall</button>
+    <button type="button" id="btnHelp" class="ghost" title="About">?</button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Camden Nights screens">
+  <button type="button" role="tab" class="tab on" data-tab="home" aria-selected="true">Night Home</button>
+  <button type="button" role="tab" class="tab" data-tab="map" aria-selected="false">Park Map</button>
+  <button type="button" role="tab" class="tab" data-tab="stove" aria-selected="false">Hot Stove</button>
+  <button type="button" role="tab" class="tab" data-tab="timeline" aria-selected="false">Timeline</button>
+  <button type="button" role="tab" class="tab" data-tab="notes" aria-selected="false">Fan Notes</button>
+</nav>
+
+<main class="stage">
+
+  <!-- ========== NIGHT HOME ========== -->
+  <section id="panel-home" class="panel on" role="tabpanel">
+    <div class="hero-night">
+      <div class="sky-band" id="skyBand" aria-hidden="true">
+        <div class="park-sil">
+          <svg viewBox="0 0 900 220" preserveAspectRatio="xMidYMax meet" class="sil-svg">
+            <!-- B&O Warehouse beyond RF (public landmark fact) -->
+            <g class="warehouse" opacity=".9">
+              <rect x="620" y="40" width="240" height="100" fill="#1a1520"/>
+              <g fill="#DF4601" opacity=".55">
+                <rect x="635" y="55" width="10" height="14"/><rect x="655" y="55" width="10" height="14"/>
+                <rect x="675" y="55" width="10" height="14"/><rect x="695" y="55" width="10" height="14"/>
+                <rect x="715" y="55" width="10" height="14"/><rect x="735" y="55" width="10" height="14"/>
+                <rect x="755" y="55" width="10" height="14"/><rect x="775" y="55" width="10" height="14"/>
+                <rect x="795" y="55" width="10" height="14"/><rect x="815" y="55" width="10" height="14"/>
+                <rect x="835" y="55" width="10" height="14"/>
+                <rect x="635" y="80" width="10" height="14"/><rect x="655" y="80" width="10" height="14"/>
+                <rect x="675" y="80" width="10" height="14"/><rect x="695" y="80" width="10" height="14"/>
+                <rect x="715" y="80" width="10" height="14"/><rect x="735" y="80" width="10" height="14"/>
+                <rect x="755" y="80" width="10" height="14"/><rect x="775" y="80" width="10" height="14"/>
+                <rect x="795" y="80" width="10" height="14"/><rect x="815" y="80" width="10" height="14"/>
+                <rect x="835" y="80" width="10" height="14"/>
+              </g>
+              <text x="740" y="130" text-anchor="middle" fill="#DF4601" font-size="11" font-family="system-ui" opacity=".7">B&amp;O WAREHOUSE</text>
+            </g>
+            <!-- Upper deck silhouette -->
+            <path d="M40 160 L80 90 L200 70 L350 75 L500 68 L620 85 L700 100 L860 140 L860 220 L40 220 Z" fill="#0d0a12" opacity=".95"/>
+            <!-- Lights -->
+            <g class="lights">
+              <circle cx="120" cy="72" r="4" fill="#ffe9a8" class="blink"/><circle cx="280" cy="68" r="4" fill="#ffe9a8" class="blink d1"/>
+              <circle cx="440" cy="66" r="4" fill="#ffe9a8" class="blink d2"/><circle cx="580" cy="74" r="4" fill="#ffe9a8" class="blink d3"/>
+            </g>
+            <!-- Field hint -->
+            <ellipse cx="380" cy="195" rx="280" ry="28" fill="#1a3d28" opacity=".5"/>
+            <text x="380" y="200" text-anchor="middle" fill="#DF4601" font-size="13" font-weight="700" font-family="system-ui" opacity=".85">ORIOLE PARK AT CAMDEN YARDS</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="tonight-card demo-card">
+        <div class="demo-banner">EXAMPLE · DEMO TONIGHT CARD — not a live fixture</div>
+        <div class="matchup">
+          <div class="side home-side">
+            <div class="tmark">BAL</div>
+            <div class="tname">Orioles</div>
+            <div class="trec">EXAMPLE record</div>
+          </div>
+          <div class="vs-block">
+            <div class="vs">VS</div>
+            <div class="kick" id="demoKick">DEMO · Night game</div>
+            <div class="venue">Camden Yards · Baltimore</div>
+          </div>
+          <div class="side away-side">
+            <div class="tmark opp">NYY</div>
+            <div class="tname">Example Rival</div>
+            <div class="trec">placeholder</div>
+          </div>
+        </div>
+        <div class="tonight-meta">
+          <div class="meta-chip"><span>Gates</span><strong>EXAMPLE 6:00 PM</strong></div>
+          <div class="meta-chip"><span>First pitch</span><strong>EXAMPLE 7:05 PM</strong></div>
+          <div class="meta-chip"><span>Weather</span><strong>DEMO clear / 72°F</strong></div>
+          <div class="meta-chip"><span>Promo</span><strong>EXAMPLE giveaway night</strong></div>
+        </div>
+      </div>
+
+      <div class="home-grid">
+        <article class="card fact-card">
+          <h3>Public facts</h3>
+          <ul>
+            <li>Baltimore Orioles · American League East</li>
+            <li>Oriole Park at Camden Yards (opened 1992)</li>
+            <li>Team orange <code>#DF4601</code> · black · white</li>
+            <li>B&amp;O Warehouse stands beyond right field — iconic landmark</li>
+          </ul>
+        </article>
+        <article class="card tip-card">
+          <h3>Night-game quick tips <span class="tag-ex">EXAMPLE</span></h3>
+          <ul>
+            <li>Arrive early for the warehouse promenade glow</li>
+            <li>Lower RF sees warehouse lights best after dusk</li>
+            <li>Pack a light layer — harbor breeze after dark</li>
+            <li>Scorebook + pen for the classic night-game feel</li>
+          </ul>
+        </article>
+        <article class="card clock-card">
+          <h3>Dusk → night</h3>
+          <p class="clock-label">Sky cycle (cosmetic)</p>
+          <div class="sky-meter"><div class="sky-fill" id="skyFill"></div></div>
+          <p class="muted" id="skyLabel">Deep night · stadium lights on</p>
+          <button type="button" class="btn-orange" id="btnCycleSky">Replay dusk → night</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PARK MAP ========== -->
+  <section id="panel-map" class="panel" role="tabpanel" hidden>
+    <div class="map-layout">
+      <div class="map-wrap">
+        <div class="demo-banner thin">Interactive SVG · section tips are EXAMPLE fan notes, not official seating charts</div>
+        <svg id="parkMap" viewBox="0 0 800 640" class="park-svg" role="img" aria-label="Stylized Camden Yards park map">
+          <defs>
+            <linearGradient id="grassG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2a6b3a"/><stop offset="1" stop-color="#1a4a28"/>
+            </linearGradient>
+            <linearGradient id="dirtG" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#c4a070"/><stop offset="1" stop-color="#9a7550"/>
+            </linearGradient>
+            <filter id="glowSoft"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <!-- Outfield / field -->
+          <ellipse cx="400" cy="360" rx="280" ry="240" fill="url(#grassG)" stroke="#3d8a50" stroke-width="2"/>
+          <!-- Infield dirt -->
+          <path d="M400 280 L520 400 L400 480 L280 400 Z" fill="url(#dirtG)" opacity=".9"/>
+          <circle cx="400" cy="360" r="28" fill="url(#dirtG)"/>
+          <circle cx="400" cy="360" r="8" fill="#fff" opacity=".7"/>
+          <!-- Bases -->
+          <rect x="392" y="272" width="16" height="16" fill="#fff" transform="rotate(45 400 280)"/>
+          <rect x="512" y="392" width="16" height="16" fill="#fff" transform="rotate(45 520 400)"/>
+          <rect x="392" y="472" width="16" height="16" fill="#fff" transform="rotate(45 400 480)"/>
+          <rect x="272" y="392" width="16" height="16" fill="#fff" transform="rotate(45 280 400)"/>
+          <!-- Pitcher's mound -->
+          <ellipse cx="400" cy="360" rx="18" ry="12" fill="#b8956a"/>
+
+          <!-- Lower bowl sections -->
+          <g id="sections" class="sections">
+            <!-- Home plate / lower behind plate -->
+            <path class="sec" data-id="lp" d="M300 500 Q400 560 500 500 L480 540 Q400 590 320 540 Z" fill="#1a1a22" stroke="#DF4601" stroke-width="1.5"/>
+            <!-- Lower 1B -->
+            <path class="sec" data-id="l1b" d="M500 500 L560 420 L600 440 L540 530 Z" fill="#22222c" stroke="#DF4601" stroke-width="1.5"/>
+            <!-- Lower 3B -->
+            <path class="sec" data-id="l3b" d="M300 500 L240 420 L200 440 L260 530 Z" fill="#22222c" stroke="#DF4601" stroke-width="1.5"/>
+            <!-- Lower RF -->
+            <path class="sec" data-id="lrf" d="M560 420 L620 300 L660 320 L600 440 Z" fill="#1e1e28" stroke="#DF4601" stroke-width="1.5"/>
+            <!-- Lower LF -->
+            <path class="sec" data-id="llf" d="M240 420 L180 300 L140 320 L200 440 Z" fill="#1e1e28" stroke="#DF4601" stroke-width="1.5"/>
+            <!-- CF bleachers stylized -->
+            <path class="sec" data-id="cf" d="M280 200 Q400 140 520 200 L500 230 Q400 180 300 230 Z" fill="#181820" stroke="#DF4601" stroke-width="1.5"/>
+            <!-- Upper deck home -->
+            <path class="sec" data-id="up" d="M280 560 Q400 620 520 560 L500 590 Q400 640 300 590 Z" fill="#121218" stroke="#ff8a3d" stroke-width="1.5"/>
+            <!-- Upper 1B -->
+            <path class="sec" data-id="u1b" d="M540 530 L620 420 L660 440 L580 560 Z" fill="#14141c" stroke="#ff8a3d" stroke-width="1.5"/>
+            <!-- Upper 3B -->
+            <path class="sec" data-id="u3b" d="M260 530 L180 420 L140 440 L220 560 Z" fill="#14141c" stroke="#ff8a3d" stroke-width="1.5"/>
+            <!-- Warehouse view / RF reserved -->
+            <path class="sec" data-id="wh" d="M620 300 L680 220 L720 240 L660 320 Z" fill="#2a1810" stroke="#DF4601" stroke-width="2"/>
+            <!-- Bullpens -->
+            <rect class="sec" data-id="bp-h" x="580" y="340" width="50" height="30" rx="4" fill="#1a2a1a" stroke="#5a8a5a" stroke-width="1.5"/>
+            <rect class="sec" data-id="bp-a" x="170" y="340" width="50" height="30" rx="4" fill="#1a2a1a" stroke="#5a8a5a" stroke-width="1.5"/>
+          </g>
+
+          <!-- Warehouse landmark beyond RF -->
+          <g transform="translate(700,80)">
+            <rect x="0" y="0" width="70" height="120" fill="#1a1520" stroke="#DF4601" stroke-width="1"/>
+            <g fill="#DF4601" opacity=".5">
+              <rect x="8" y="12" width="8" height="10"/><rect x="22" y="12" width="8" height="10"/><rect x="36" y="12" width="8" height="10"/><rect x="50" y="12" width="8" height="10"/>
+              <rect x="8" y="32" width="8" height="10"/><rect x="22" y="32" width="8" height="10"/><rect x="36" y="32" width="8" height="10"/><rect x="50" y="32" width="8" height="10"/>
+              <rect x="8" y="52" width="8" height="10"/><rect x="22" y="52" width="8" height="10"/><rect x="36" y="52" width="8" height="10"/><rect x="50" y="52" width="8" height="10"/>
+            </g>
+            <text x="35" y="145" text-anchor="middle" fill="#DF4601" font-size="9" font-family="system-ui">B&amp;O</text>
+          </g>
+
+          <!-- Labels -->
+          <text x="400" y="535" text-anchor="middle" fill="#fff" font-size="11" font-family="system-ui" opacity=".8">HOME</text>
+          <text x="630" y="355" text-anchor="middle" fill="#9f9" font-size="9" font-family="system-ui">BP</text>
+          <text x="195" y="355" text-anchor="middle" fill="#9f9" font-size="9" font-family="system-ui">BP</text>
+          <text x="400" y="175" text-anchor="middle" fill="#ccc" font-size="10" font-family="system-ui">CF</text>
+          <text x="400" y="30" text-anchor="middle" fill="#DF4601" font-size="14" font-weight="700" font-family="system-ui">CAMDEN YARDS · STYLIZED MAP</text>
+        </svg>
+        <div id="mapTip" class="map-tip" hidden></div>
+      </div>
+      <aside class="map-panel" id="mapPanel">
+        <h3>Section desk</h3>
+        <p class="muted">Hover a section for a quick tip. Click for the full EXAMPLE fan note.</p>
+        <div id="mapDetail" class="map-detail">
+          <div class="placeholder-sec">
+            <strong>Pick a section</strong>
+            <p>Lower bowl, upper deck, warehouse view, or bullpens.</p>
+          </div>
+        </div>
+        <div class="legend">
+          <span><i class="lg orange"></i> Lower bowl</span>
+          <span><i class="lg peach"></i> Upper deck</span>
+          <span><i class="lg green"></i> Bullpens</span>
+          <span><i class="lg brick"></i> Warehouse view</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ========== HOT STOVE ========== -->
+  <section id="panel-stove" class="panel" role="tabpanel" hidden>
+    <div class="demo-banner">EXAMPLE offseason board — fictional placeholders, NOT real rumors or verified 2026 moves</div>
+    <div class="stove-grid">
+      <article class="card">
+        <h3>Free-agent targets <span class="tag-ex">EXAMPLE</span></h3>
+        <table class="desk-table">
+          <thead><tr><th>Name</th><th>Pos</th><th>Fit note</th><th>Priority</th></tr></thead>
+          <tbody id="faBody"></tbody>
+        </table>
+      </article>
+      <article class="card">
+        <h3>Arbitration placeholders <span class="tag-ex">EXAMPLE</span></h3>
+        <table class="desk-table">
+          <thead><tr><th>Player</th><th>Pos</th><th>Demo ask</th><th>Status</th></tr></thead>
+          <tbody id="arbBody"></tbody>
+        </table>
+      </article>
+      <article class="card wide">
+        <h3>Offseason whiteboard <span class="tag-ex">EXAMPLE</span>
+        </h3>
+        <div class="whiteboard" id="whiteboard">
+          <div class="wb-col"><h4>Keep</h4><ul id="wbKeep"></ul></div>
+          <div class="wb-col"><h4>Explore</h4><ul id="wbExplore"></ul></div>
+          <div class="wb-col"><h4>Pass</h4><ul id="wbPass"></ul></div>
+        </div>
+        <p class="muted tiny">All names &amp; notes are invented for this offline desk. Do not cite as reporting.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========== TIMELINE ========== -->
+  <section id="panel-timeline" class="panel" role="tabpanel" hidden>
+    <div class="demo-banner">EXAMPLE season milestones — demo dates only, not an official schedule</div>
+    <div class="tl-controls">
+      <button type="button" class="ghost" id="tlLeft" aria-label="Scroll left">←</button>
+      <span class="muted">Scroll or drag · EXAMPLE year arc</span>
+      <button type="button" class="ghost" id="tlRight" aria-label="Scroll right">→</button>
+    </div>
+    <div class="tl-track-wrap" id="tlWrap">
+      <div class="tl-track" id="tlTrack"></div>
+    </div>
+  </section>
+
+  <!-- ========== FAN NOTES ========== -->
+  <section id="panel-notes" class="panel" role="tabpanel" hidden>
+    <div class="notes-grid">
+      <article class="card">
+        <h3>Scorebook notepad</h3>
+        <p class="muted">Saved in this browser via localStorage.</p>
+        <textarea id="scorebook" rows="12" placeholder="Inning notes, pitching changes, warehouse sunset color…"></textarea>
+        <div class="row-btns">
+          <button type="button" class="btn-orange" id="btnSaveNotes">Save</button>
+          <button type="button" class="ghost" id="btnClearNotes">Clear</button>
+          <span class="muted" id="notesStatus"></span>
+        </div>
+      </article>
+      <article class="card">
+        <h3>Night-game packing checklist</h3>
+        <ul class="checklist" id="packList"></ul>
+        <button type="button" class="ghost" id="btnResetPack">Reset checklist</button>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>Camden Nights · offline fan desk · port 4290</span>
+  <span>Public facts OK · EXAMPLE panels labeled · no live MLB feed</span>
+</footer>
+
+<!-- Help modal -->
+<dialog id="helpModal" class="modal">
+  <form method="dialog">
+    <h2>About Camden Nights</h2>
+    <p>Night-game park map and fan desk for Oriole Park at Camden Yards. Built for Boyd — lifelong Orioles fan near Baltimore.</p>
+    <ul>
+      <li><strong>Public:</strong> Orioles, Camden Yards, orange <code>#DF4601</code>, AL East, B&amp;O Warehouse beyond RF.</li>
+      <li><strong>EXAMPLE:</strong> tonight card, section tips, hot stove board, timeline, any scores/standings flavor.</li>
+    </ul>
+    <button type="submit" class="btn-orange">Got it</button>
+  </form>
+</dialog>
+
+<script>/*__APP__*/</script>
+</body>
+</html>
